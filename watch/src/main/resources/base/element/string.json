@@ -1,0 +1,20 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "宠物管家手表端"
+    },
+    {
+      "name": "WatchAbility_desc",
+      "value": "宠物管家手表端应用"
+    },
+    {
+      "name": "WatchAbility_label",
+      "value": "宠物管家"
+    },
+    {
+      "name": "DISTRIBUTED_DATASYNC_reason",
+      "value": "用于手机与手表之间同步宠物数据"
+    }
+  ]
+}

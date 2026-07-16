@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    html,body{width:100%;height:100%;overflow:hidden;background:#eef1f5}
+    #wrapper{
+      position:relative;width:100%;height:100%;overflow:hidden;background-color:#eef1f5;
+      background-image:
+        linear-gradient(rgba(255,255,255,.74) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.74) 1px, transparent 1px),
+        linear-gradient(135deg,#f7e8ef,#e8f0f5);
+      background-size:28px 28px,28px 28px,100% 100%;
+    }
+    #tile-canvas{position:absolute;top:0;left:0;width:100%;height:100%;z-index:1}
+    #tile-grid{position:absolute;top:0;left:0;width:100%;height:100%;z-index:2;pointer-events:none}
+    .tile-fallback-line{position:absolute;background:rgba(151,163,181,.22)}
+    .tile-fallback-line.horizontal{height:1px;width:100%}
+    .tile-fallback-line.vertical{width:1px;height:100%}
+    #overlay{position:absolute;top:0;left:0;width:100%;height:100%;z-index:5;pointer-events:none}
+    #markers-layer{position:absolute;top:0;left:0;width:100%;height:100%;z-index:10;pointer-events:none}
+    .marker{
+      position:absolute;width:18px;height:18px;border-radius:50%;border:2.5px solid #fff;
+      box-shadow:0 2px 8px rgba(0,0,0,.3);transform:translate(-50%,-50%);
+    }
+    #status{
+      position:absolute;left:10px;bottom:10px;z-index:20;display:none;max-width:calc(100% - 20px);
+      padding:5px 8px;border-radius:10px;background:rgba(255,255,255,.88);color:#8A8A8A;
+      font:12px -apple-system,BlinkMacSystemFont,sans-serif;box-shadow:0 2px 8px rgba(0,0,0,.08);
+    }
+    #fallback{
+      width:100%;height:100%;display:none;flex-direction:column;align-items:center;justify-content:center;
+      background:linear-gradient(135deg,#f5e8ee,#e8eef5);font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+    }
+    #fallback .icon{font-size:36px;margin-bottom:8px}
+    #fallback .txt1{font-size:14px;color:#8A8A8A;margin-bottom:4px}
+    #fallback .txt2{font-size:12px;color:#B0B0B0}
+  </style>
+</head>
+<body>
+  <div id="wrapper">
+    <canvas id="tile-canvas"></canvas>
+    <div id="tile-grid"></div>
+    <svg id="overlay" xmlns="http://www.w3.org/2000/svg">
+      <line id="conn-line" stroke="#FF7FAF" stroke-width="2.5" stroke-dasharray="6,4" opacity="0.7"/>
+    </svg>
+    <div id="markers-layer"></div>
+    <div id="status"></div>
+  </div>
+  <div id="fallback">
+    <div class="icon">&#x1F5FA;</div>
+    <div class="txt1">地图加载失败</div>
+    <div class="txt2">请查看 ArkWeb 日志</div>
+  </div>
+  <script>
+    var TILE = 256;
+    var ZOOM = 16;
+    var MAX_SIZE_RETRY = 5;
+
+    window.onerror = function(message, source, lineno, colno, error) {
+      console.error('[PetMap] js error message=' + message + ' line=' + lineno + ' col=' + colno);
+      if (error && error.stack) {
+        console.error('[PetMap] stack=' + error.stack);
+      }
+      showFallback('地图脚本执行失败');
+      return false;
+    };
+
+    function log(message) {
+      console.log('[PetMap] ' + message);
+    }
+
+    function lng2x(lng, z) {
+      return (lng + 180) / 360 * Math.pow(2, z);
+    }
+
+    function lat2y(lat, z) {
+      var r = lat * Math.PI / 180;
+      return (1 - Math.log(Math.tan(r) + 1 / Math.cos(r)) / Math.PI) / 2 * Math.pow(2, z);
+    }
+
+    function coordPx(lat, lng, sx, sy, ox, oy) {
+      return {
+        x: (lng2x(lng, ZOOM) - sx) * TILE + ox,
+        y: (lat2y(lat, ZOOM) - sy) * TILE + oy
+      };
+    }
+
+    function setStatus(message) {
+      var status = document.getElementById('status');
+      status.textContent = message || '';
+      status.style.display = message ? 'block' : 'none';
+    }
+
+    function showFallback(message) {
+      document.getElementById('wrapper').style.display = 'none';
+      var fb = document.getElementById('fallback');
+      fb.style.display = 'flex';
+      if (message) {
+        fb.querySelector('.txt2').textContent = message;
+      }
+    }
+
+    function renderFallbackRoads(width, height) {
+      var g = document.getElementById('tile-grid');
+      g.innerHTML = '';
+
+      for (var y = 28; y < height; y += 38) {
+        var h = document.createElement('div');
+        h.className = 'tile-fallback-line horizontal';
+        h.style.top = y + 'px';
+        g.appendChild(h);
+      }
+
+      for (var x = 32; x < width; x += 46) {
+        var v = document.createElement('div');
+        v.className = 'tile-fallback-line vertical';
+        v.style.left = x + 'px';
+        g.appendChild(v);
+      }
+    }
+
+    function prepareCanvas(width, height) {
+      var canvas = document.getElementById('tile-canvas');
+      var ratio = window.devicePixelRatio || 1;
+      canvas.style.width = width + 'px';
+      canvas.style.height = height + 'px';
+      canvas.width = Math.max(1, Math.floor(width * ratio));
+      canvas.height = Math.max(1, Math.floor(height * ratio));
+
+      var ctx = canvas.getContext('2d');
+      if (!ctx) {
+        return null;
+      }
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+      ctx.clearRect(0, 0, width, height);
+      return ctx;
+    }
+
+    function renderMarkers(userLat, userLng, petLat, petLng, sx, sy, ox, oy) {
+      var ml = document.getElementById('markers-layer');
+      var ln = document.getElementById('conn-line');
+      ml.innerHTML = '';
+
+      var up = coordPx(userLat, userLng, sx, sy, ox, oy);
+      var pp = coordPx(petLat, petLng, sx, sy, ox, oy);
+
+      var um = document.createElement('div');
+      um.className = 'marker';
+      um.style.left = up.x + 'px';
+      um.style.top = up.y + 'px';
+      um.style.background = '#FF7FAF';
+      ml.appendChild(um);
+
+      var pm = document.createElement('div');
+      pm.className = 'marker';
+      pm.style.left = pp.x + 'px';
+      pm.style.top = pp.y + 'px';
+      pm.style.background = '#4CAF50';
+      ml.appendChild(pm);
+
+      ln.setAttribute('x1', up.x);
+      ln.setAttribute('y1', up.y);
+      ln.setAttribute('x2', pp.x);
+      ln.setAttribute('y2', pp.y);
+    }
+
+    function showMap(userLat, userLng, petLat, petLng, retryCount) {
+      retryCount = retryCount || 0;
+
+      var w = document.getElementById('wrapper');
+      var g = document.getElementById('tile-grid');
+      var fb = document.getElementById('fallback');
+      w.style.display = '';
+      fb.style.display = 'none';
+
+      var W = w.clientWidth;
+      var H = w.clientHeight;
+      log('showMap size=' + W + 'x' + H + ' retry=' + retryCount);
+
+      if (W === 0 || H === 0) {
+        if (retryCount < MAX_SIZE_RETRY) {
+          setTimeout(function() {
+            showMap(userLat, userLng, petLat, petLng, retryCount + 1);
+          }, 100);
+          return;
+        }
+        showFallback('地图容器尺寸为 0');
+        return;
+      }
+
+      var cx = lng2x(userLng, ZOOM);
+      var cy = lat2y(userLat, ZOOM);
+      var cols = Math.ceil(W / TILE) + 2;
+      var rows = Math.ceil(H / TILE) + 2;
+      var sx = Math.floor(cx) - Math.floor(cols / 2);
+      var sy = Math.floor(cy) - Math.floor(rows / 2);
+      var ox = W / 2 - (cx - sx) * TILE;
+      var oy = H / 2 - (cy - sy) * TILE;
+
+      g.innerHTML = '';
+      g.style.left = '0px';
+      g.style.top = '0px';
+      renderFallbackRoads(W, H);
+      var ctx = prepareCanvas(W, H);
+      setStatus('');
+
+      var loaded = 0;
+      var failed = 0;
+      var drawn = 0;
+      var total = cols * rows;
+      log('tiles total=' + total + ' cols=' + cols + ' rows=' + rows);
+
+      function reportTiles() {
+        if (loaded + failed !== total) {
+          return;
+        }
+        log('tiles done loaded=' + loaded + ' failed=' + failed + ' drawn=' + drawn + ' total=' + total);
+        if (failed === total) {
+          setStatus('地图瓦片加载失败，已显示位置标记');
+        } else if (failed > 0) {
+          setStatus('部分地图瓦片加载失败');
+        } else if (drawn === 0) {
+          setStatus('地图瓦片已加载但绘制失败，已显示位置标记');
+        }
+      }
+
+      for (var r = 0; r < rows; r++) {
+        for (var c = 0; c < cols; c++) {
+          var tx = sx + c;
+          var ty = sy + r;
+          var sub = ((tx + ty) % 4 + 4) % 4 + 1;
+          var dx = (tx - sx) * TILE + ox;
+          var dy = (ty - sy) * TILE + oy;
+          var url = 'https://webrd0' + sub + '.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=7&x=' + tx + '&y=' + ty + '&z=' + ZOOM;
+          loadTileToCanvas(ctx, url, dx, dy);
+        }
+      }
+
+      renderMarkers(userLat, userLng, petLat, petLng, sx, sy, ox, oy);
+
+      function loadTileToCanvas(context, url, dx, dy) {
+        var tile = new Image();
+        tile.onload = function() {
+          loaded++;
+          if (context) {
+            try {
+              context.drawImage(tile, dx, dy, TILE, TILE);
+              drawn++;
+            } catch (drawError) {
+              console.error('[PetMap] tile draw failed url=' + url + ' error=' + drawError);
+            }
+          }
+          reportTiles();
+        };
+        tile.onerror = function() {
+          failed++;
+          console.error('[PetMap] tile load failed url=' + url);
+          reportTiles();
+        };
+        tile.src = url;
+      }
+    }
+
+    function initMap(userLat, userLng, petLat, petLng) {
+      log('initMap user=' + userLat + ',' + userLng + ' pet=' + petLat + ',' + petLng);
+      try {
+        showMap(userLat, userLng, petLat, petLng, 0);
+      } catch (e) {
+        console.error('[PetMap] initMap failed ' + e);
+        showFallback('地图初始化失败');
+      }
+    }
+
+    function updatePosition(userLat, userLng, petLat, petLng) {
+      log('updatePosition user=' + userLat + ',' + userLng + ' pet=' + petLat + ',' + petLng);
+      try {
+        showMap(userLat, userLng, petLat, petLng, 0);
+      } catch (e) {
+        console.error('[PetMap] updatePosition failed ' + e);
+        showFallback('地图位置更新失败');
+      }
+    }
+  </script>
+</body>
+</html>

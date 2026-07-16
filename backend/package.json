@@ -1,0 +1,16 @@
+{
+  "name": "petcare-backend",
+  "version": "1.0.0",
+  "description": "PetCare AI Companion Backend - Doubao API Proxy",
+  "main": "server.js",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "ws": "^8.21.0"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test audio_utils.test.js",
+    "test:realtime": "node test_realtime.js"
+  }
+}

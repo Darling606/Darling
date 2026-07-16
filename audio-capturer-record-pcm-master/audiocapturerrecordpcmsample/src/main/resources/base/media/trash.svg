@@ -1,0 +1,22 @@
+<!--
+  - Copyright (c) 2026 Huawei Device Co., Ltd.
+  - Licensed under the Apache License, Version 2.0 (the "License");
+  - you may not use this file except in compliance with the License.
+  - You may obtain a copy of the License at
+  -
+  -     http://www.apache.org/licenses/LICENSE-2.0
+  -
+  - Unless required by applicable law or agreed to in writing, software
+  - distributed under the License is distributed on an "AS IS" BASIS,
+  - WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  - See the License for the specific language governing permissions and
+  - limitations under the License.
+  -->
+
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+    <rect width="24" height="24" opacity="0"></rect>
+    <g>
+        <path d="M16.54 22.46Q17.06 22.46 17.53 22.21Q18 21.96 18.3 21.52Q18.6 21.07 18.65 20.52L19.78 7.73Q19.8 7.51 19.64 7.36Q19.49 7.2 19.27 7.2L4.73 7.2Q4.51 7.2 4.36 7.36Q4.2 7.51 4.22 7.73L5.35 20.52Q5.4 21.07 5.69 21.52Q5.98 21.96 6.44 22.21Q6.91 22.46 7.46 22.46L16.54 22.46ZM13.75 18.84Q13.44 18.84 13.21 18.61Q12.98 18.38 13.01 18.07L13.27 11.06Q13.27 10.75 13.49 10.55Q13.7 10.34 14.02 10.34Q14.33 10.37 14.56 10.6Q14.78 10.82 14.76 11.14L14.52 18.12Q14.5 18.43 14.28 18.64Q14.06 18.84 13.75 18.84ZM10.27 18.84Q9.96 18.84 9.74 18.64Q9.53 18.43 9.5 18.12L9.24 11.14Q9.22 10.82 9.43 10.6Q9.65 10.37 9.96 10.34Q10.27 10.32 10.5 10.54Q10.73 10.75 10.73 11.06L11.02 18.07Q11.04 18.38 10.81 18.61Q10.58 18.84 10.27 18.84ZM15.77 4.54Q15.5 3.24 14.47 2.39Q13.44 1.54 12.1 1.54Q10.75 1.54 9.72 2.39Q8.69 3.24 8.42 4.54L3.43 4.54Q3.12 4.54 2.9 4.75Q2.69 4.97 2.69 5.28Q2.69 5.59 2.9 5.82Q3.12 6.05 3.43 6.05L8.93 6.05L15.29 6.05L20.57 6.02Q20.88 6.02 21.1 5.81Q21.31 5.59 21.31 5.28Q21.31 4.97 21.1 4.75Q20.88 4.54 20.57 4.54L15.77 4.54Z"
+              fill="rgba(0,0,0,0.9019607843137255)"></path>
+    </g>
+</svg>

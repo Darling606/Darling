@@ -1,0 +1,68 @@
+{
+  "app": {
+    "signingConfigs": [
+      {
+        "name": "default",
+        "type": "HarmonyOS",
+        "material": {
+          "certpath": "C:\\Users\\Daling\\.ohos\\config\\default_Darling32_qkzDoDtzYYU5TtnlB17uLHTQoP9sMX7VNUb33xgDQqE=.cer",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001B8D621D4106D9216356B339E1ADC1E883C64F18772AA291BC39CB8C71B8AABA6BF8D321C855918F",
+          "profile": "C:\\Users\\Daling\\.ohos\\config\\default_Darling32_qkzDoDtzYYU5TtnlB17uLHTQoP9sMX7VNUb33xgDQqE=.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "C:\\Users\\Daling\\.ohos\\config\\default_Darling32_qkzDoDtzYYU5TtnlB17uLHTQoP9sMX7VNUb33xgDQqE=.p12",
+          "storePassword": "0000001B284CA52DC75DD83C50D5F2393FEB07E40F805562F8F032698473DA13A8F6820C3971E412761408"
+        }
+      }
+    ],
+    "products": [
+      {
+        "name": "default",
+        "signingConfig": "default",
+        "targetSdkVersion": "6.0.0(20)",
+        "compatibleSdkVersion": "6.0.0(20)",
+        "runtimeOS": "HarmonyOS",
+        "buildOption": {
+          "strictMode": {
+            "caseSensitiveCheck": true,
+            "useNormalizedOHMUrl": true
+          }
+        }
+      }
+    ],
+    "buildModeSet": [
+      {
+        "name": "debug"
+      },
+      {
+        "name": "release"
+      }
+    ]
+  },
+  "modules": [
+    {
+      "name": "entry",
+      "srcPath": "./entry",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "watch",
+      "srcPath": "./watch",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
+    }
+  ]
+}

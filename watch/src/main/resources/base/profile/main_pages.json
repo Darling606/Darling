@@ -1,0 +1,9 @@
+{
+  "src": [
+    "pages/Index",
+    "pages/PetInfoPage",
+    "pages/HealthRecordPage",
+    "pages/FeedReminderPage",
+    "pages/BehaviorAlertPage"
+  ]
+}

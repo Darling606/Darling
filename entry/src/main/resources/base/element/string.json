@@ -1,0 +1,28 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "宠物管家应用"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "宠物管家主界面"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "宠物管家"
+    },
+    {
+      "name": "DISTRIBUTED_DATASYNC_reason",
+      "value": "用于手机与手表之间同步宠物数据"
+    },
+    {
+      "name": "microphone_reason",
+      "value": "用于语音输入功能"
+    },
+    {
+      "name": "location_reason",
+      "value": "用于显示宠物与您的位置信息"
+    }
+  ]
+}

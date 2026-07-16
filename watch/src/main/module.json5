@@ -1,0 +1,60 @@
+{
+  "module": {
+    "name": "watch",
+    "type": "entry",
+    "description": "$string:module_desc",
+    "mainElement": "WatchAbility",
+    "deviceTypes": [
+      "wearable"
+    ],
+    "deliveryWithInstall": true,
+    "installationFree": false,
+    "pages": "$profile:main_pages",
+    "requestPermissions": [
+      {
+        "name": "ohos.permission.DISTRIBUTED_DATASYNC",
+        "reason": "$string:DISTRIBUTED_DATASYNC_reason",
+        "usedScene": {
+          "abilities": ["WatchAbility"],
+          "when": "always"
+        }
+      }
+    ],
+    "abilities": [
+      {
+        "name": "WatchAbility",
+        "srcEntry": "./ets/watchability/WatchAbility.ets",
+        "description": "$string:WatchAbility_desc",
+        "icon": "$media:layered_image",
+        "label": "$string:WatchAbility_label",
+        "startWindowIcon": "$media:startIcon",
+        "startWindowBackground": "$color:start_window_background",
+        "exported": true,
+        "skills": [
+          {
+            "entities": [
+              "entity.system.home"
+            ],
+            "actions": [
+              "ohos.want.action.home"
+            ]
+          }
+        ]
+      }
+    ],
+    "extensionAbilities": [
+      {
+        "name": "WatchBackupAbility",
+        "srcEntry": "./ets/watchbackupability/WatchBackupAbility.ets",
+        "type": "backup",
+        "exported": false,
+        "metadata": [
+          {
+            "name": "ohos.extension.backup",
+            "resource": "$profile:backup_config"
+          }
+        ],
+      }
+    ]
+  }
+}
