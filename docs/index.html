@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>宠物管家 | OpenHarmony 项目作品集</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="回到顶部">
+      <span class="brand-mark"><img src="../entry/src/main/resources/base/media/px_cat.png" alt=""></span>
+      <span>宠物管家</span>
+    </a>
+    <nav class="nav-links" aria-label="作品集导航">
+      <a href="#modules">五大模块</a>
+      <a href="#ai">AI 陪伴</a>
+      <a href="#architecture">技术架构</a>
+      <a href="#award">比赛成果</a>
+    </nav>
+    <a class="header-action" href="https://github.com/Darling606/Darling" target="_blank" rel="noreferrer">查看源码</a>
+  </header>
+
+  <main id="top">
+    <section class="hero section-grid">
+      <div class="hero-copy reveal">
+        <p class="eyebrow">2026 开源鸿蒙宠物关怀产品挑战赛 · 三等奖</p>
+        <h1>基于 OpenHarmony 的智能宠物关怀应用</h1>
+        <p class="hero-lead">
+          用 ArkTS 与 ArkUI 打造宠物档案、健康记录、行为分析、领养流程和 AI 电子萌宠，将日常养宠数据整合成更连续的移动体验。
+        </p>
+        <div class="hero-actions">
+          <a class="primary-btn magnetic" href="#modules">浏览项目</a>
+          <a class="ghost-btn magnetic" href="#architecture">查看技术</a>
+        </div>
+        <div class="metric-row" aria-label="项目数据">
+          <div>
+            <strong data-count="5">0</strong>
+            <span>核心模块</span>
+          </div>
+          <div>
+            <strong data-count="9">0</strong>
+            <span>功能场景</span>
+          </div>
+          <div>
+            <strong data-count="2">0</strong>
+            <span>设备形态</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="device-stage reveal" data-depth="18">
+        <div class="phone-shell">
+          <div class="phone-camera"></div>
+          <div class="phone-screen">
+            <div class="app-top">
+              <span>宠物管家</span>
+              <button class="icon-btn" type="button"><img src="../entry/src/main/resources/base/media/px_plus.png" alt=""></button>
+            </div>
+            <div class="pet-card">
+              <div class="pet-avatar"><img src="../entry/src/main/resources/base/media/px_cat.png" alt=""></div>
+              <div>
+                <h2>奶糖</h2>
+                <p>健康评分 · 英短幼年期</p>
+              </div>
+              <strong>90</strong>
+            </div>
+            <div class="health-grid">
+              <div><img src="../entry/src/main/resources/base/media/px_health.png" alt=""><b>10kg</b><span>体重</span></div>
+              <div><img src="../entry/src/main/resources/base/media/px_food.png" alt=""><b>好</b><span>饮食</span></div>
+              <div><img src="../entry/src/main/resources/base/media/px_water.png" alt=""><b>适量</b><span>饮水</span></div>
+              <div><img src="../entry/src/main/resources/base/media/px_vaccine.png" alt=""><b>已接种</b><span>疫苗</span></div>
+            </div>
+            <div class="voice-card">
+              <div>
+                <span>实时语音陪伴</span>
+                <p>奶糖正在回应...</p>
+              </div>
+              <div class="wave" aria-hidden="true">
+                <i></i><i></i><i></i><i></i><i></i>
+              </div>
+            </div>
+            <div class="tabbar" aria-hidden="true">
+              <span class="active"><img src="../entry/src/main/resources/base/media/px_home_white.png" alt="">首页</span>
+              <span><img src="../entry/src/main/resources/base/media/px_nav_health.png" alt="">健康</span>
+              <span><img src="../entry/src/main/resources/base/media/px_nav_behavior.png" alt="">行为</span>
+              <span><img src="../entry/src/main/resources/base/media/px_adopt.png" alt="">领养</span>
+              <span><img src="../entry/src/main/resources/base/media/px_companion.png" alt="">伙伴</span>
+            </div>
+          </div>
+        </div>
+        <div class="floating-note note-a">WebSocket 实时语音</div>
+        <div class="floating-note note-b">折叠屏双栏适配</div>
+      </div>
+    </section>
+
+    <section class="section band" id="modules">
+      <div class="section-title reveal">
+        <p class="eyebrow">Product Modules</p>
+        <h2>五个模块串起完整养宠流程</h2>
+      </div>
+      <div class="module-grid">
+        <article class="module-card reveal tilt-card">
+          <img src="../entry/src/main/resources/base/media/px_home.png" alt="">
+          <h3>宠物档案</h3>
+          <p>记录名称、年龄、品种、体重、健康状态，让后续健康和行为数据拥有统一入口。</p>
+        </article>
+        <article class="module-card reveal tilt-card">
+          <img src="../entry/src/main/resources/base/media/px_nav_health.png" alt="">
+          <h3>宠物健康</h3>
+          <p>支持健康记录、体重体温追踪、定时喂食提醒和模拟远程投喂。</p>
+        </article>
+        <article class="module-card reveal tilt-card">
+          <img src="../entry/src/main/resources/base/media/px_nav_behavior.png" alt="">
+          <h3>宠物行为</h3>
+          <p>围绕活动、睡眠、情绪和位置关系建立日常观察面板。</p>
+        </article>
+        <article class="module-card reveal tilt-card">
+          <img src="../entry/src/main/resources/base/media/px_adopt.png" alt="">
+          <h3>宠物领养</h3>
+          <p>浏览待领养信息、提交申请，并将领养结果衔接到宠物档案。</p>
+        </article>
+        <article class="module-card reveal tilt-card wide">
+          <img src="../entry/src/main/resources/base/media/px_companion.png" alt="">
+          <h3>电子萌宠</h3>
+          <p>通过文本与实时语音和“奶糖”交流，并用基础记忆延续上下文。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section split" id="ai">
+      <div class="ai-panel reveal">
+        <p class="eyebrow">AI Companion</p>
+        <h2>奶糖，让工具变成陪伴入口</h2>
+        <p>
+          电子萌宠接入豆包 seed1.8 文本模型与实时语音模型，通过 WebSocket 长连接完成语音数据传输，并保留基础上下文记忆。
+        </p>
+        <div class="chat-stack">
+          <div class="bubble left">今天奶糖吃饭正常吗？</div>
+          <div class="bubble right">记录显示饮食状态良好，我也帮你记住它最近喜欢晚上活动。</div>
+          <div class="bubble left">提醒我 19:30 喂食。</div>
+        </div>
+      </div>
+      <div class="signal-board reveal">
+        <div class="signal-title">
+          <img src="../entry/src/main/resources/base/media/px_chat.png" alt="">
+          <span>语音链路</span>
+        </div>
+        <ol>
+          <li><b>01</b><span>AudioRenderer 兼容处理</span></li>
+          <li><b>02</b><span>WebSocket 长连接传输</span></li>
+          <li><b>03</b><span>模型响应与上下文记忆</span></li>
+          <li><b>04</b><span>界面消息总线刷新</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section architecture" id="architecture">
+      <div class="section-title reveal">
+        <p class="eyebrow">Architecture</p>
+        <h2>纯北向开发，突出 HarmonyOS 应用能力</h2>
+      </div>
+      <div class="arch-grid">
+        <article class="arch-card reveal">
+          <span>ArkTS / ArkUI</span>
+          <h3>原生界面与状态刷新</h3>
+          <p>采用 ArkUI 组件化搭建页面，用轻量级消息总线处理跨组件数据变化后的同步刷新。</p>
+        </article>
+        <article class="arch-card reveal">
+          <span>Node.js / SQLite</span>
+          <h3>后端服务与数据存储</h3>
+          <p>通过后端接口和本地数据库完成宠物档案、健康、行为、日历等模块的数据管理。</p>
+        </article>
+        <article class="arch-card reveal">
+          <span>Multi Device</span>
+          <h3>双设备同步</h3>
+          <p>使用时间戳版本判断与删除标记处理覆盖、删除和二次上传冲突。</p>
+        </article>
+        <article class="arch-card reveal">
+          <span>Responsive</span>
+          <h3>折叠屏适配</h3>
+          <p>根据屏幕宽度切换单栏与双栏布局，展开过程保持当前操作上下文。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section award" id="award">
+      <div class="award-card reveal">
+        <div>
+          <p class="eyebrow">Award</p>
+          <h2>广东省大学生计算机设计大赛参赛项目</h2>
+          <p>项目获得 2026 开源鸿蒙宠物关怀产品挑战赛三等奖，覆盖 AI 语音陪伴、定时喂食、地图定位、双设备同步与折叠屏适配等功能。</p>
+        </div>
+        <a class="primary-btn magnetic" href="https://github.com/Darling606/Darling" target="_blank" rel="noreferrer">打开 GitHub 仓库</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>Pet Care Portfolio · OpenHarmony · ArkTS</span>
+    <a href="#top">回到顶部</a>
+  </footer>
+
+  <script src="./app.js"></script>
+</body>
+</html>
