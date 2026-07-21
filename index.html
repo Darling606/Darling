@@ -1,270 +1,77 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OpenHarmony 智能宠物关怀系统</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "Microsoft YaHei", sans-serif;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="refresh" content="0; url=./docs/">
+  <title>宠物管家 | 项目作品集</title>
+  <style>
+    :root {
+      --bg: #f4f6f3;
+      --ink: #131615;
+      --muted: #68716b;
+      --sage: #c0dfb9;
+      --paper: #ffffff;
+      --line: #d8ded8;
+    }
 
-        body {
-            background-color: #fff9f5;
-            color: #554a44;
-        }
+    * {
+      box-sizing: border-box;
+    }
 
-        /* 导航栏 - 暖色系 */
-        header {
-            background: #ff9a8b;
-            background: linear-gradient(to right, #ff9a8b, #ffb88c);
-            color: white;
-            padding: 18px 30px;
-            box-shadow: 0 2px 12px rgba(255, 154, 139, 0.15);
-            position: sticky;
-            top: 0;
-            z-index: 999;
-        }
+    body {
+      min-height: 100vh;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      background: radial-gradient(circle at 24% 18%, rgba(192, 223, 185, 0.38), transparent 30%),
+        radial-gradient(circle at 80% 22%, rgba(219, 231, 236, 0.55), transparent 26%),
+        var(--bg);
+      color: var(--ink);
+      font-family: "HarmonyOS Sans SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    }
 
-        .nav {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    main {
+      width: min(520px, calc(100% - 32px));
+      padding: 34px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.78);
+      box-shadow: inset 0 0 0 1px var(--line), 0 24px 70px rgba(30, 38, 33, 0.1);
+      text-align: center;
+    }
 
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-        }
+    h1 {
+      margin: 0 0 12px;
+      font-size: 30px;
+      letter-spacing: 0;
+    }
 
-        .nav-links a {
-            color: white;
-            margin-left: 26px;
-            text-decoration: none;
-            font-size: 16px;
-        }
+    p {
+      margin: 0 0 24px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
 
-        .nav-links a:hover {
-            text-decoration: underline;
-        }
-
-        /* 主横幅 - 暖色调可爱风 */
-        .banner {
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-            color: #7a5c48;
-            text-align: center;
-            padding: 90px 20px;
-            border-radius: 0 0 40px 40px;
-        }
-
-        .banner h1 {
-            font-size: 38px;
-            margin-bottom: 18px;
-        }
-
-        .banner p {
-            font-size: 18px;
-            max-width: 700px;
-            margin: 0 auto 36px;
-            line-height: 1.7;
-        }
-
-        /* 弹跳动画按钮 */
-        .btn {
-            display: inline-block;
-            padding: 14px 32px;
-            background: #ff7a7a;
-            color: white;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 16px;
-            box-shadow: 0 6px 15px rgba(255, 122, 122, 0.3);
-            transition: all 0.3s ease;
-            animation: bounce 1.8s infinite ease-in-out;
-        }
-
-        /* 弹跳动画核心 */
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-        }
-
-        .btn:hover {
-            background: #ff5e5e;
-            transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(255, 94, 94, 0.4);
-        }
-
-        /* 内容区块 */
-        .container {
-            max-width: 1200px;
-            margin: 50px auto;
-            padding: 0 20px;
-        }
-
-        .title {
-            text-align: center;
-            font-size: 30px;
-            margin-bottom: 40px;
-            color: #8c6a56;
-        }
-
-        /* 功能卡片 - 可爱圆角 */
-        .card-box {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 24px;
-            margin-bottom: 60px;
-        }
-
-        .card {
-            background: white;
-            padding: 32px;
-            border-radius: 20px;
-            box-shadow: 0 8px 20px rgba(255, 190, 157, 0.12);
-            text-align: center;
-            transition: 0.3s;
-        }
-
-        .card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 12px 25px rgba(255, 190, 157, 0.2);
-        }
-
-        .card h3 {
-            margin: 16px 0;
-            font-size: 21px;
-            color: #ff7a7a;
-        }
-
-        .card p {
-            color: #77665b;
-            line-height: 1.6;
-        }
-
-        /* 监控面板 */
-        .panel {
-            background: white;
-            padding: 35px;
-            border-radius: 20px;
-            box-shadow: 0 8px 20px rgba(255, 190, 157, 0.12);
-        }
-
-        .panel h2 {
-            margin-bottom: 22px;
-            font-size: 24px;
-            color: #8c6a56;
-        }
-
-        .data-item {
-            padding: 14px;
-            border-bottom: 1px solid #f6eee9;
-            font-size: 16px;
-            color: #6d5b50;
-        }
-
-        /* 底部 */
-        footer {
-            background: #f9e6d9;
-            color: #9c7d6b;
-            text-align: center;
-            padding: 35px 20px;
-            margin-top: 50px;
-            border-radius: 40px 40px 0 0;
-        }
-    </style>
+    a {
+      display: inline-flex;
+      min-height: 46px;
+      align-items: center;
+      justify-content: center;
+      padding: 0 24px;
+      border-radius: 999px;
+      background: var(--sage);
+      color: var(--ink);
+      font-weight: 800;
+      text-decoration: none;
+      box-shadow: 0 12px 28px rgba(126, 148, 134, 0.2);
+    }
+  </style>
 </head>
-
 <body>
-    <!-- 导航 -->
-    <header>
-        <div class="nav">
-            <div class="logo">OpenHarmony 智能宠物关怀</div>
-            <div class="nav-links">
-                <a href="#home">首页</a>
-                <a href="#func">功能</a>
-                <a href="#monitor">监控</a>
-                <a href="#data">健康数据</a>
-                <a href="#about">关于</a>
-            </div>
-        </div>
-    </header>
-
-    <!-- 横幅 -->
-    <section class="banner" id="home">
-        <h1>基于 OpenHarmony 的智能宠物关怀系统</h1>
-        <p>全天候监测宠物健康、行为、进食与睡眠状态，通过多Agent智能分析，提供专业养护建议与异常预警。</p>
-        <a href="#func" class="btn">查看功能</a>
-    </section>
-
-    <!-- 功能模块 -->
-    <section class="container" id="func">
-        <h2 class="title">核心功能</h2>
-        <div class="card-box">
-            <div class="card">
-                <h3>实时数据采集</h3>
-                <p>通过OpenHarmony设备采集宠物运动、进食、睡眠、体温等数据</p>
-            </div>
-            <div class="card">
-                <h3>AI健康分析</h3>
-                <p>多Agent长链推理，自动识别异常行为与健康风险</p>
-            </div>
-            <div class="card">
-                <h3>智能预警</h3>
-                <p>异常状态实时推送，让主人第一时间掌握宠物情况</p>
-            </div>
-            <div class="card">
-                <h3>个性化养护</h3>
-                <p>根据宠物档案生成专属饮食、运动、护理方案</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- 设备监控 -->
-    <section class="container" id="monitor">
-        <h2 class="title">设备实时监控</h2>
-        <div class="panel">
-            <h2>智能宠物设备状态</h2>
-            <div class="data-item">设备连接：已连接（OpenHarmony 智能项圈）</div>
-            <div class="data-item">当前电量：86%</div>
-            <div class="data-item">定位状态：正常</div>
-            <div class="data-item">数据上传：实时同步中</div>
-        </div>
-    </section>
-
-    <!-- 健康数据 -->
-    <section class="container" id="data">
-        <h2 class="title">宠物健康数据</h2>
-        <div class="panel">
-            <div class="data-item">今日运动步数：4821 步</div>
-            <div class="data-item">睡眠时长：12.5 小时</div>
-            <div class="data-item">进食量：正常</div>
-            <div class="data-item">饮水量：正常</div>
-            <div class="data-item">健康状态：良好 ✅</div>
-        </div>
-    </section>
-
-    <!-- 关于项目 -->
-    <section class="container" id="about">
-        <h2 class="title">关于本项目</h2>
-        <div class="panel">
-            <p style="font-size:16px; line-height:1.8;">
-                本项目基于 OpenHarmony 分布式操作系统开发，通过多Agent智能协作实现宠物全天候健康监护。<br><br>
-                项目解决了养宠用户无法实时监测宠物状态、难以提前发现健康异常、缺乏个性化养护方案等痛点。<br><br>
-                已完成设备端原型、数据采集、智能分析、用户可视化平台等完整功能，可直接用于课程设计、毕业设计、科创比赛。
-            </p>
-        </div>
-    </section>
-
-    <!-- 底部 -->
-    <footer>
-        <p>OpenHarmony 智能宠物关怀系统 Demo &copy; 2025</p>
-    </footer>
+  <main>
+    <h1>正在打开宠物管家作品集</h1>
+    <p>如果页面没有自动跳转，请点击下面按钮进入新版动态项目展示页。</p>
+    <a href="./docs/">进入作品集</a>
+  </main>
 </body>
 </html>
